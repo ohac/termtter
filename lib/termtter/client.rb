@@ -330,7 +330,10 @@ module Termtter
 
       def handle_error(e)
         if logger
-          logger.error("#{e.class.to_s}: #{e.message}")
+          msg = e.message
+          # TODO ad-hoc
+          msg = msg.split[0] if msg.index('Twitter / Over capacity')
+          logger.error("#{e.class.to_s}: #{msg}")
           logger.error(e.backtrace.join("\n")) if config.devel
         else
           raise e
